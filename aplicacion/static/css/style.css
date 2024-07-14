@@ -1,0 +1,114 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.navbar {
+    background-color: #282828; /* Fondo oscuro */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    max-height: 80px; /* Ajusta este valor para hacer el logo más grande */
+    width: auto; 
+    margin-right: 10px; 
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: #ffffff; /* Texto blanco */
+}
+
+.navbar-toggler {
+    border-color: #ffffff; /* Bordes blancos */
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff; /* Icono de toggler blanco */
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff; /* Texto de los enlaces en blanco */
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #cccccc; /* Texto de los enlaces en blanco al pasar el ratón */
+}
+
+.carousel-inner img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.card {
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+    border: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #282828; /* Color oscuro */
+}
+
+.card-text {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Cambia este color al que prefieras */
+    border-color: #007bff;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Cambia este color al que prefieras */
+    border-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745; /* Cambia este color al que prefieras */
+    border-color: #28a745;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Cambia este color al que prefieras */
+    border-color: #218838;
+}
+
+.btn-custom {
+    background-color: #ff5733; /* Elige tu color preferido */
+    border-color: #ff5733; /* Elige tu color preferido */
+    color: white; /* Color del texto */
+}
+
+.btn-custom:hover {
+    background-color: #e14a2b; /* Color para el hover */
+    border-color: #e14a2b; /* Color para el hover */
+}
+
+
+#cart-count {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+footer {
+    background-color: #282828; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+    padding: 15px 0;
+}
+
+footer p {
+    margin-bottom: 0;
+}

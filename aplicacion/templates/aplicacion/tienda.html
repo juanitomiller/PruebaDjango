@@ -1,0 +1,29 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Nuestra Tienda de Perfumes</h2>
+<div class="row">
+    {% for producto in productos %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% else %}
+            <img src="{% static 'img/default-product.jpg' %}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text">{{ producto.descripcion }}</p>
+                <p class="card-text">Precio: ${{ producto.precio|floatformat:0 }} CLP</p>
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/carrito.js' %}"></script>
+{% endblock %}

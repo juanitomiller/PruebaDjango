@@ -1,0 +1,39 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Carrito de Compras</h2>
+{% if carrito_items %}
+<table id="carrito-table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in carrito_items %}
+        <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td class="precio">${{ item.producto.precio }}</td>
+            <td class="cantidad">{{ item.cantidad }}</td>
+            <td class="total">${{ item.producto.precio|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No hay productos en tu carrito.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h3 id="total-general">Total: ${{ total }}</h3>
+{% else %}
+<p>Tu carrito está vacío.</p>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/carrito.js' %}"></script>
+{% endblock %}

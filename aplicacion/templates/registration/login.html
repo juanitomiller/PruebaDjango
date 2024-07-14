@@ -1,0 +1,41 @@
+<!-- aplicacion/templates/aplicacion/login.html -->
+{% extends "aplicacion/base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Iniciar Sesión</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Inicio de Sesión</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Usuario</label>
+                            <input type="text" name="username" id="id_username" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Contraseña</label>
+                            <input type="password" name="password" id="id_password" class="form-control" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-block" type="submit">Iniciar Sesión</button>
+                            <a href="{% url 'registro' %}" class="btn btn-secondary btn-block">Registrarse</a>
+                            <a href="{% url 'index' %}" class="btn btn-outline-primary btn-block">Volver al Inicio</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if request.user.is_authenticated %}
+        <div class="text-center mt-4">
+            <p>Bienvenido, {{ request.user.username }}</p>
+            <a class="btn btn-outline-danger mt-3" href="{% url 'logout' %}">Cerrar Sesión</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
