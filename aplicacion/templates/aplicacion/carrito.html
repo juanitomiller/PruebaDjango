@@ -16,10 +16,10 @@
     <tbody>
         {% for item in carrito_items %}
         <tr>
-            <td>{{ item.producto.nombre }}</td>
-            <td class="precio">${{ item.producto.precio }}</td>
-            <td class="cantidad">{{ item.cantidad }}</td>
-            <td class="total">${{ item.producto.precio|floatformat:2 }}</td>
+            <td>{{ item.name }}</td>
+            <td class="precio">${{ item.price }}</td>
+            <td class="cantidad">{{ item.quantity }}</td>
+            <td class="total">${{ item.price|floatformat:2 }}</td>
         </tr>
         {% empty %}
         <tr>

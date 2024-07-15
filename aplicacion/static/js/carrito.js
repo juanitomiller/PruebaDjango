@@ -1,48 +1,50 @@
-// carrito.js
+document.addEventListener("DOMContentLoaded", function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const cartCountElement = document.getElementById('carrito-count');
 
-document.addEventListener('DOMContentLoaded', function() {
-  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            addToCart(productId);
+        });
+    });
 
-  addToCartButtons.forEach(button => {
-      button.addEventListener('click', () => {
-          const productId = button.getAttribute('data-product-id');
+    function addToCart(productId) {
+        fetch(`/add-to-cart/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                'product_id': productId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const currentCount = parseInt(cartCountElement.textContent);
+                cartCountElement.textContent = currentCount + 1;
+                alert('Producto agregado al carrito');
+            } else {
+                alert('Error al agregar al carrito');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-          fetch(`/agregar-al-carrito/${productId}/`, {
-              method: 'POST',
-              headers: {
-                  'X-CSRFToken': getCookie('csrftoken'),
-                  'Content-Type': 'application/json'
-              }
-          })
-          .then(response => {
-              if (response.ok) {
-                  return response.json();
-              } else {
-                  throw new Error('Error al agregar producto al carrito');
-              }
-          })
-          .then(data => {
-              alert(`Producto ${data.producto_nombre} agregado al carrito.`);
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              alert('Hubo un problema al agregar el producto al carrito. Inténtalo de nuevo más tarde.');
-          });
-      });
-  });
-
-  function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 });

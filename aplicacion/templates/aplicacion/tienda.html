@@ -16,7 +16,7 @@
                 <h5 class="card-title">{{ producto.nombre }}</h5>
                 <p class="card-text">{{ producto.descripcion }}</p>
                 <p class="card-text">Precio: ${{ producto.precio|floatformat:0 }} CLP</p>
-                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ producto.id }}" data-product-price="{{ producto.precio }}" data-product-name="{{ producto.nombre }}">Agregar al Carrito</button>
             </div>
         </div>
     </div>

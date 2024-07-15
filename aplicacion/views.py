@@ -7,6 +7,8 @@ from .models import OrdenDePago, Producto, ItemCarrito
 from django.contrib.auth.decorators import login_required
 import logging
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 
 # views.py
@@ -92,9 +94,14 @@ def exit(request):
 
 @login_required
 def carrito(request):
-    carrito_items = ItemCarrito.objects.filter(usuario=request.user)
-    total = sum(item.producto.precio * item.cantidad for item in carrito_items)
-    return render(request, 'aplicacion/carrito.html', {'carrito_items': carrito_items, 'total': total})
+    cart = request.session.get('cart', {})
+    carrito_items = [{'name': item['name'], 'price': item['price'], 'quantity': item['quantity']} for item in cart.values()]
+    total = sum(item['price'] * item['quantity'] for item in cart.values())
+    context = {
+        'carrito_items': carrito_items,
+        'total': total
+    }
+    return render(request, 'aplicacion/carrito.html', context)
 
 logger = logging.getLogger(__name__)
 
@@ -129,3 +136,18 @@ def actualizar_cantidad(request, item_id):
             item.delete()
             messages.success(request, "Producto eliminado del carrito.")
     return redirect('carrito')
+
+
+@csrf_exempt
+@require_POST
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Producto, id=product_id)
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)]['quantity'] += 1
+    else:
+        cart[str(product_id)] = {'price': product.precio, 'name': product.nombre, 'quantity': 1}
+
+    request.session['cart'] = cart
+    return JsonResponse({'success': True})

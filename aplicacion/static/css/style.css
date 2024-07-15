@@ -1,31 +1,32 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
-    color: #343a40;
+    color: #212222;
 }
 
 .navbar {
-    background-color: #282828; /* Fondo oscuro */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #000000; /* Fondo oscuro */
+    box-shadow: 0px 2px 4px rgb(0, 0, 0);
+    padding: 9px 12px;
 }
 
 .navbar-brand img {
-    max-height: 80px; /* Ajusta este valor para hacer el logo más grande */
+    max-height: 100px; /* Ajusta este valor para hacer el logo más grande */
     width: auto; 
-    margin-right: 10px; 
+    margin-right: 30px; 
 }
 
 .navbar-brand {
     font-size: 1.5rem;
-    color: #ffffff; /* Texto blanco */
+    color: #080808; /* Texto blanco */
 }
 
 .navbar-toggler {
-    border-color: #ffffff; /* Bordes blancos */
+    border-color: #2b2a2a; /* Bordes blancos */
 }
 
 .navbar-toggler-icon {
-    background-color: #ffffff; /* Icono de toggler blanco */
+    background-color: #6e6b6b; /* Icono de toggler blanco */
 }
 
 .navbar-nav .nav-link {
@@ -56,23 +57,23 @@ body {
 
 .card-title {
     font-size: 1.5rem;
-    color: #282828; /* Color oscuro */
+    color: #080707; /* Color oscuro */
 }
 
 .card-text {
     font-size: 1.1rem;
-    color: #6c757d;
+    color: #161616;
 }
 
 .btn-primary {
-    background-color: #007bff; /* Cambia este color al que prefieras */
-    border-color: #007bff;
+    background-color: #0a0b0c; /* Cambia este color al que prefieras */
+    border-color: #050505;
     transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3; /* Cambia este color al que prefieras */
-    border-color: #0056b3;
+    background-color: #303131; /* Cambia este color al que prefieras */
+    border-color: #46494d;
 }
 
 .btn-success {
@@ -97,14 +98,13 @@ body {
     border-color: #e14a2b; /* Color para el hover */
 }
 
-
 #cart-count {
     font-size: 14px;
     margin-left: 5px;
 }
 
 footer {
-    background-color: #282828; /* Fondo oscuro */
+    background-color: #0e0d0d; /* Fondo oscuro */
     color: #ffffff; /* Texto blanco */
     padding: 15px 0;
 }
