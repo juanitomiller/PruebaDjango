@@ -19,7 +19,7 @@
             <td>{{ item.name }}</td>
             <td class="precio">${{ item.price }}</td>
             <td class="cantidad">{{ item.quantity }}</td>
-            <td class="total">${{ item.price|floatformat:2 }}</td>
+            <td class="total">${{ item.total }}</td>
         </tr>
         {% empty %}
         <tr>

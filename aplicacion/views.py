@@ -106,16 +106,16 @@ def carrito(request):
 logger = logging.getLogger(__name__)
 
 @login_required
-def agregar_al_carrito(request, producto_id):
+def agregar_producto(request):
     if request.method == 'POST':
-        try:
-            producto = get_object_or_404(Producto, id=producto_id)
-            # Aquí va la lógica para agregar el producto al carrito
-            logger.debug(f'Producto agregado al carrito: {producto.nombre}')
-            return JsonResponse({'mensaje': 'Producto agregado al carrito correctamente.'})
-        except Exception as e:
-            logger.error(f'Error al agregar producto al carrito: {e}')
-            return JsonResponse({'error': 'Hubo un problema al agregar el producto al carrito. Inténtelo de nuevo más tarde.'}, status=500)
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('tienda')  # Redirige a la página de la tienda después de agregar el producto
+    else:
+        form = ProductoForm()
+    
+    return render(request, 'aplicacion/producto_agregar.html', {'form': form})
 
 def eliminar_del_carrito(request, item_id):
     item = get_object_or_404(ItemCarrito, pk=item_id)
@@ -124,19 +124,17 @@ def eliminar_del_carrito(request, item_id):
     messages.success(request, f"{producto_nombre} fue eliminado del carrito.")
     return redirect('carrito')
 
-def actualizar_cantidad(request, item_id):
-    item = get_object_or_404(ItemCarrito, pk=item_id)
+def editar_producto(request, producto_id):
+    producto = Producto.objects.get(pk=producto_id)
     if request.method == 'POST':
-        cantidad = int(request.POST.get('cantidad'))
-        if cantidad > 0:
-            item.cantidad = cantidad
-            item.save()
-            messages.success(request, "Cantidad actualizada.")
-        else:
-            item.delete()
-            messages.success(request, "Producto eliminado del carrito.")
-    return redirect('carrito')
-
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('tienda')  # Redirige a la página de la tienda después de editar el producto
+    else:
+        form = ProductoForm(instance=producto)
+    
+    return render(request, 'aplicacion/producto_editar.html', {'form': form, 'producto': producto})
 
 @csrf_exempt
 @require_POST

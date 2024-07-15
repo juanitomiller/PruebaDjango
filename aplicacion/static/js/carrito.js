@@ -1,45 +1,66 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-    const cartCountElement = document.getElementById('carrito-count');
+    const carritoCountElement = document.getElementById('carrito-count');
+    const carritoDropdown = document.getElementById('carrito-dropdown');
+    const totalGeneralElement = document.getElementById('total-general');
 
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            addToCart(productId);
+    function actualizarCarrito(carrito_items, total) {
+        carritoDropdown.innerHTML = ''; // Limpiar el contenido del dropdown antes de actualizar
+        carrito_items.forEach(item => {
+            carritoDropdown.innerHTML += `<li>${item.name} - $${item.price} x ${item.quantity}</li>`;
         });
-    });
+        carritoCountElement.textContent = carrito_items.length;
+        totalGeneralElement.textContent = `Total: $${total}`;
+    }
 
-    function addToCart(productId) {
-        fetch(`/add-to-cart/${productId}/`, {
+    // Obtener el contenido inicial del carrito desde el servidor al cargar la página
+    fetch('/get-cart/')
+    .then(response => response.json())
+    .then(data => {
+        if (data.carrito_items.length > 0) {
+            actualizarCarrito(data.carrito_items, data.total);
+        } else {
+            carritoCountElement.textContent = '0';
+            totalGeneralElement.textContent = 'Tu carrito está vacío.';
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
+    // Función para eliminar un producto del carrito
+    function eliminarProducto(producto_id) {
+        fetch(`/remove-from-cart/${producto_id}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({
-                'product_id': productId
-            })
+            }
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const currentCount = parseInt(cartCountElement.textContent);
-                cartCountElement.textContent = currentCount + 1;
-                alert('Producto agregado al carrito');
+                actualizarCarrito(data.carrito_items, data.total);
             } else {
-                alert('Error al agregar al carrito');
+                console.error('Error al eliminar producto del carrito');
             }
         })
         .catch(error => console.error('Error:', error));
     }
 
+    // Evento para manejar el clic en el botón de eliminar producto del carrito
+    carritoDropdown.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            const producto_id = event.target.dataset.productId;
+            eliminarProducto(producto_id);
+        }
+    });
+
+    // Función auxiliar para obtener el valor de una cookie
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                if (cookie.startsWith(name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
