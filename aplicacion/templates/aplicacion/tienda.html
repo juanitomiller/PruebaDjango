@@ -2,9 +2,30 @@
 {% load static %}
 
 {% block content %}
-<h2>Nuestra Tienda de Perfumes</h2>
+<h2>Perfumería Femenina</h2>
 <div class="row">
-    {% for producto in productos %}
+    {% for producto in productos_femeninos %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% else %}
+            <img src="{% static 'img/default-product.jpg' %}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text">{{ producto.descripcion }}</p>
+                <p class="card-text">Precio: ${{ producto.precio|floatformat:0 }} CLP</p>
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ producto.id }}" data-product-price="{{ producto.precio }}" data-product-name="{{ producto.nombre }}">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<h2>Perfumería Masculina</h2>
+<div class="row">
+    {% for producto in productos_masculinos %}
     <div class="col-md-4">
         <div class="card mb-4">
             {% if producto.imagen %}

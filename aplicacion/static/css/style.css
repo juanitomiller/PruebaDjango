@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color: #f8f9fa;
     color: #212222;
 }
@@ -22,11 +22,11 @@ body {
 }
 
 .navbar-toggler {
-    border-color: #2b2a2a; /* Bordes blancos */
+    border-color: #0e0d0d; /* Bordes blancos */
 }
 
 .navbar-toggler-icon {
-    background-color: #6e6b6b; /* Icono de toggler blanco */
+    background-color: #0e0909; /* Icono de toggler blanco */
 }
 
 .navbar-nav .nav-link {
@@ -38,6 +38,20 @@ body {
 .navbar-nav .nav-link:hover {
     color: #cccccc; /* Texto de los enlaces en blanco al pasar el ratón */
 }
+
+
+.navbar-custom {
+    background-color: #000000; /* Color negro */
+}
+
+.navbar-custom .nav-link {
+    color: #ffffff; /* Color blanco para los enlaces */
+}
+
+.navbar-custom .nav-link:hover {
+    color: #cccccc; /* Color gris claro para los enlaces al pasar el cursor */
+}
+
 
 .carousel-inner img {
     max-height: 400px;
@@ -102,6 +116,12 @@ body {
     font-size: 14px;
     margin-left: 5px;
 }
+
+.dropdown-menu {
+    width: 100%;
+    left: 0;
+}
+
 
 footer {
     background-color: #0e0d0d; /* Fondo oscuro */

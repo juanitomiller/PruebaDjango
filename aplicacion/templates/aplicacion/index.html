@@ -28,8 +28,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'nosotros' %}" onclick="loadSection('nosotros')">Nosotros</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tienda' %}"onclick="loadSection('tienda')">Tienda</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'tienda' %}active{% endif %}" href="{% url 'tienda' %}" id="navbarDropdownTienda" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tienda
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownTienda">
+                            <li><a class="dropdown-item" href="#perfumeria-femenina">Perfumería Femenina</a></li>
+                            <li><a class="dropdown-item" href="#perfumeria-masculina">Perfumería Masculina</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -37,27 +43,24 @@
                         <a class="nav-link" href="{% url 'carrito' %}">
                           <i class="fas fa-shopping-cart"></i> Carrito (<span id="carrito-count">0</span>)
                         </a>
-                      </li>
-
+                    </li>
                     {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <span class="nav-link">Bienvenido/a, {{ request.user.username }}</span>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>
-            <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
-                {% csrf_token %}
-            </form>
-        </li>
-        
-        {% else %}
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar Sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'registro' %}" data-bs-toggle="modal" data-bs-target="#registerModal">Registrarse</a>
-                    </li>
+                        <li class="nav-item">
+                            <span class="nav-link">Bienvenido/a, {{ request.user.username }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>
+                            <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registro' %}" data-bs-toggle="modal" data-bs-target="#registerModal">Registrarse</a>
+                        </li>
                     {% endif %} 
                 </ul>
             </div>
@@ -117,7 +120,7 @@
     <section id="tienda" class="py-5">
         <div class="container">
             <h2 class="text-center">Tienda</h2>
-            <div class="row">
+            <div id="perfumeria-femenina" class="row">
                 <div class="col-md-4">
                     <div class="card shadow-sm">
                         <img src="https://via.placeholder.com/300x300?text=Perfume+1" class="card-img-top" alt="Perfume 1">
@@ -152,6 +155,42 @@
                     </div>
                 </div>
             </div>
+
+            <div id="perfumeria-masculina" class="row" style="display: none;">
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/300x300?text=Perfume+4" class="card-img-top" alt="Perfume 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Perfume 4</h5>
+                            <p class="card-text">Descripción del Perfume 4</p>
+                            <p class="card-text"><strong>$1200</strong></p>
+                            <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/300x300?text=Perfume+5" class="card-img-top" alt="Perfume 5">
+                        <div class="card-body">
+                            <h5 class="card-title">Perfume 5</h5>
+                            <p class="card-text">Descripción del Perfume 5</p>
+                            <p class="card-text"><strong>$1800</strong></p>
+                            <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/300x300?text=Perfume+6" class="card-img-top" alt="Perfume 6">
+                        <div class="card-body">
+                            <h5 class="card-title">Perfume 6</h5>
+                            <p class="card-text">Descripción del Perfume 6</p>
+                            <p class="card-text"><strong>$2200</strong></p>
+                            <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -168,8 +207,8 @@
         <p>&copy; 2024 B3njamin Acasio. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Modal for Login -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+     <!-- Modal for Login -->
+     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -225,6 +264,11 @@
             </div>
         </div>
     </div>
+
+
+
+ 
+   
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

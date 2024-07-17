@@ -1,39 +1,57 @@
 {% extends 'aplicacion/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
-<h2>Carrito de Compras</h2>
+<h2 class="carrito-titulo">Carrito de Compras</h2>
 {% if carrito_items %}
-<table id="carrito-table">
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in carrito_items %}
-        <tr>
-            <td>{{ item.name }}</td>
-            <td class="precio">${{ item.price }}</td>
-            <td class="cantidad">{{ item.quantity }}</td>
-            <td class="total">${{ item.total }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4">No hay productos en tu carrito.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<h3 id="total-general">Total: ${{ total }}</h3>
+<div class="carrito-container">
+    <table id="carrito-table" class="carrito-table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrito_items %}
+            <tr data-product-id="{{ item.id }}">
+                <td>{{ item.name }}</td>
+                <td>${{ item.price|floatformat:2 }}</td>
+                <td>
+                    <button class="decrease-quantity-btn" data-product-id="{{ item.id }}">-</button>
+                    <span class="quantity">{{ item.quantity }}</span>
+                    <button class="increase-quantity-btn" data-product-id="{{ item.id }}">+</button>
+                </td>
+                <td>${{ item.total|floatformat:2 }}</td>  {# Assuming item.total is calculated elsewhere #}
+                <td>
+                    <button class="eliminar-producto-btn" data-product-id="{{ item.id }}">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="total-container">
+        <h3 id="total-general">Total: ${{ total|floatformat:2 }}</h3>
+    </div>
+    <div class="acciones-container">
+        <button class="vaciar-carrito-btn">Vaciar Carrito</button>
+        <button class="confirmar-pedido-btn">Confirmar Pedido</button>
+    </div>
+</div>
 {% else %}
 <p>Tu carrito está vacío.</p>
 {% endif %}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/carrito.css' %}">
+{% endblock %}
+
 {% block extra_js %}
 <script src="{% static 'js/carrito.js' %}"></script>
+<script src="{% static 'js/tienda.js' %}"></script>
 {% endblock %}
